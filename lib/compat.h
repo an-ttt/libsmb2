@@ -61,7 +61,7 @@ typedef int t_socket;
 #define WIN32_LEAN_AND_MEAN
 #endif /* !WIN32_LEAN_AND_MEAN */
 
-#ifdef XBOX_PLATFORM /* MSVC 2003 and Xbox XDK Doesn´t have stdint.h header */
+#ifdef XBOX_PLATFORM /* Xbox XDK Doesn´t have stdint.h header */
 typedef char int8_t;
 typedef short int16_t;
 typedef short int_least16_t;
@@ -75,6 +75,8 @@ typedef unsigned int uint32_t;
 typedef unsigned long long uint64_t;
 typedef unsigned int uint_t;
 typedef unsigned int uintptr_t;
+#else
+#include <stdint.h>	
 #endif
 
 #ifndef ENETRESET
@@ -608,7 +610,17 @@ struct sockaddr_storage {
 #define ENOLINK ENOATTR
 #endif
 
+#include <stdint.h>
+
 #endif /* PS4_PLATFORM */
+
+#ifdef __linux__
+#include <stdint.h>
+#endif
+
+#ifdef __APPLE__
+#include <stdint.h>
+#endif
 
 #ifdef __vita__
 
@@ -625,16 +637,16 @@ ssize_t readv(t_socket fd, const struct iovec *iov, int iovcnt);
 
 #endif
 
-#if defined(__SWITCH__) || defined(__3DS__) || defined(__WII__) || defined(__GC__) || defined(__WIIU__) || defined(__NDS__)
+#if defined(__SWITCH__) || defined(__3DS__) || defined(__wii__) || defined(__gamecube__) || defined(__WIIU__) || defined(__NDS__)
 
 #include <sys/types.h>
 
-#if defined(__3DS__) || defined(__WII__) || defined(__GC__) || defined(__WIIU__) || defined(__NDS__)
+#if defined(__3DS__) || defined(__wii__) || defined(__gamecube__) || defined(__WIIU__) || defined(__NDS__)
 struct iovec {
   void  *iov_base;
   size_t iov_len;
 };	
-#if defined(__WII__) || defined(__GC__) || defined(__NDS__)
+#if defined(__wii__) || defined(__gamecube__) || defined(__NDS__)
 #ifndef __NDS__
 #include <network.h>
 #endif
@@ -719,7 +731,7 @@ ssize_t writev(int fd, const struct iovec *iov, int iovcnt);
 ssize_t readv(int fd, const struct iovec *iov, int iovcnt);
 int getlogin_r(char *buf, size_t size);
 
-#if defined(__WII__) || defined(__GC__) || defined(__NDS__)
+#if defined(__wii__) || defined(__gamecube__) || defined(__NDS__)
 int smb2_getaddrinfo(const char *node, const char*service,
                 const struct addrinfo *hints,
                 struct addrinfo **res);

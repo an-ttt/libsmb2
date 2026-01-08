@@ -137,10 +137,6 @@ jobs:
     runs-on: ubuntu-latest
     container: devkitpro/devkita64:latest
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt update -y && sudo apt upgrade -y && sudo apt install -y gettext smpq
-
     - name: git checkout
       uses: actions/checkout@v4
 
@@ -154,10 +150,6 @@ jobs:
     runs-on: ubuntu-latest
     container: devkitpro/devkitarm:latest
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt update -y && sudo apt upgrade -y && sudo apt install -y ffmpeg gettext smpq
-
     - name: git checkout
       uses: actions/checkout@v4
 
@@ -166,15 +158,11 @@ jobs:
         make -f Makefile.platform 3ds_all clean
 
   build-wii:
-    name: WII build
+    name: Wii build
 
     runs-on: ubuntu-latest
     container: devkitpro/devkitppc:latest
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt update -y && sudo apt upgrade -y && sudo apt install -y ffmpeg gettext smpq
-
     - name: git checkout
       uses: actions/checkout@v4
 
@@ -188,10 +176,6 @@ jobs:
     runs-on: ubuntu-latest
     container: devkitpro/devkitppc:latest
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt update -y && sudo apt upgrade -y && sudo apt install -y ffmpeg gettext smpq
-
     - name: git checkout
       uses: actions/checkout@v4
 
@@ -200,15 +184,11 @@ jobs:
         make -f Makefile.platform gc_all clean
 
   build-wiiu:
-    name: WII-U Build
+    name: Wii-U Build
 
     runs-on: ubuntu-latest
     container: devkitpro/devkitppc:latest
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt update -y && sudo apt upgrade -y && sudo apt install -y ffmpeg gettext smpq
-
     - name: git checkout
       uses: actions/checkout@v4
 
@@ -222,10 +202,6 @@ jobs:
     runs-on: ubuntu-latest
     container: devkitpro/devkitarm:latest
     steps:
-    - name: Install dependencies
-      run: |
-        sudo apt update -y && sudo apt upgrade -y && sudo apt install -y ffmpeg gettext smpq
-
     - name: git checkout
       uses: actions/checkout@v4
 
