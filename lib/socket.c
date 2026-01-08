@@ -1198,10 +1198,10 @@ connect_async_ai(struct smb2_context *smb2, const struct addrinfo *ai, int *fd_o
 #endif
 
         if (connect(fd, (struct sockaddr *)&ss, socksize) != 0
-#ifndef _MSC_VER
-                  && errno != EINPROGRESS) {
-#else
+#if defined(_WIN32) || defined(_MSC_VER)
                   && WSAGetLastError() != WSAEWOULDBLOCK) {
+#else
+                  && errno != EINPROGRESS) {
 #endif
                 smb2_set_error(smb2, "Connect failed with errno : "
                         "%s(%d)", strerror(errno), errno);
@@ -1418,10 +1418,10 @@ smb2_bind_and_listen(const uint16_t port, const int max_connections, int *out_fd
         socksize = sizeof(serv_addr);
 
         if (bind(fd, (struct sockaddr *)&serv_addr, socksize) != 0
-#ifndef _MSC_VER
-                  && errno != EINPROGRESS) {
-#else
+#if defined(_WIN32) || defined(_MSC_VER)
                   && WSAGetLastError() != WSAEWOULDBLOCK) {
+#else
+                  && errno != EINPROGRESS) {
 #endif
                 close(fd);
                 return -EIO;
