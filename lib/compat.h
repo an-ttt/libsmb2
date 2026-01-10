@@ -115,7 +115,7 @@ typedef unsigned int uintptr_t;
 #define EBADF WSAENOTSOCK
 #endif
 
-#if defined(_XBOX) || defined(__MINGW32__)
+#if defined(_XBOX)
 #define snprintf _snprintf
 int gethostname(char* name, size_t len);
 #endif
