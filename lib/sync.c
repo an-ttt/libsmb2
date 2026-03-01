@@ -73,8 +73,17 @@ static int wait_for_reply(struct smb2_context *smb2,
 		pfd.fd = smb2_get_fd(smb2);
 		pfd.events = smb2_which_events(smb2);
 
+		if (pfd.fd < 0) {
+			smb2_set_error(smb2, "Invalid file descriptor for poll");
+			return -1;
+		}
+
 		if (poll(&pfd, 1, 1000) < 0) {
-			smb2_set_error(smb2, "Poll failed");
+			if (errno == EINTR) {
+				continue;
+			}
+			smb2_set_error(smb2, "Poll failed: %s (%d)",
+				       strerror(errno), errno);
 			return -1;
 		}
                 if (smb2->timeout) {
