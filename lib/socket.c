@@ -387,7 +387,12 @@ read_more_data:
                 if (err == WSAEINTR || err == WSAEWOULDBLOCK) {
 #else
                 int err = errno;
-                if (err == EINTR || err == EAGAIN || err == EWOULDBLOCK) {
+                if (
+#ifdef __ANDROID__
+                    err == EINTR || 
+					err == EBADF || // for Android Emulator
+#endif
+                    err == EAGAIN || err == EWOULDBLOCK) {
 #endif
                         return -EAGAIN;
                 }
@@ -460,7 +465,12 @@ read_more_data:
                                         if (err == WSAEINTR || err == WSAEWOULDBLOCK) {
 #else
                                         int err = errno;
-                                        if (err == EINTR || err == EAGAIN || err == EWOULDBLOCK) {
+                                        if (
+#ifdef __ANDROID__
+                                            err == EINTR ||
+											err == EBADF || // for Android Emulator
+#endif
+                                            err == EAGAIN || err == EWOULDBLOCK) {
 #endif
                                                 count = 0;
                                         }
